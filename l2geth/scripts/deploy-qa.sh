@@ -2,8 +2,6 @@
 
 cd ../
 echo $PWD
-npm install
-yarn build
 
 docker build . -t 172.22.41.103:5000/optimism-verifier:qa -f ./docker/kovan.Dockerfile
 docker push 172.22.41.103:5000/optimism-verifier:qa

@@ -8,7 +8,7 @@ FROM node:12-alpine
 #RUN apk add python make gcc g++
 
 WORKDIR /app/optimism/dtl/
-ADD db /app/optimism/dtl/db
+#ADD db /app/optimism/dtl/db
 ADD dist /app/optimism/dtl/dist
 ADD node_modules /app/optimism/dtl/node_modules
 ADD .env.kovan /app/optimism/dtl/
