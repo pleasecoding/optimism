@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: optimism-verifier
+  namespace: bnbchain
+  labels:
+    app: optimism-verifier
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: optimism-verifier
+  template:
+    metadata:
+      name: optimism-verifier
+      labels:
+        app: optimism-verifier
+    spec:
+      nodeSelector:
+        app: explorer
+      containers:
+        - image: 172.22.41.103:5000/optimism-verifier:qa
+          name: optimism-verifier
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "4Gi"
+              cpu: "3000m"
+            limits:
+              memory: "8Gi"
+              cpu: "8000m"
+          volumeMounts:
+            - mountPath: /opt/app/logs
+              name: optimism-verifier-volume
+      volumes:
+        - hostPath:
+            path: /mnt/efs/optimism-verifier
+          name: optimism-verifier-volume

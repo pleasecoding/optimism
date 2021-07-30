@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: optimism-dtl
+  namespace: bnbchain
+  labels:
+    app: optimism-dtl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: optimism-dtl
+  template:
+    metadata:
+      name: optimism-dtl
+      labels:
+        app: optimism-dtl
+    spec:
+      nodeSelector:
+        app: explorer
+      containers:
+        - image: 172.22.41.103:5000/optimism-dtl:qa
+          name: optimism-dtl
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "4Gi"
+              cpu: "3000m"
+            limits:
+              memory: "8Gi"
+              cpu: "8000m"
+          volumeMounts:
+            - mountPath: /opt/app/logs
+              name: optimism-dtl-volume
+      volumes:
+        - hostPath:
+            path: /mnt/efs/optimism-dtl
+          name: optimism-dtl-volume
